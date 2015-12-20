@@ -1,57 +1,62 @@
-#include <cstring>
-#include <cstdio>
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
+#include <cstring>
+#include <cstdio>
 #include <string>
 #include <fstream>
 using namespace std;
-std::string rot47(std::string s)
+string rot47(string s)
 {
-    std::string s1 = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    std::string s2 = "PQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO";
+	string s1 = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+	string s2 = "PQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO";
 
-    std::string ret = "";
-    for (unsigned int i = 0; i < s.size(); i++)
-    {
-      if(s[i]==' '){
-        ret+=' ';
-      }else{
-        std::size_t pos = s2.find(s[i]);
-        ret += s1[pos];}
-    }
+	string ret = "";
+	for (unsigned int i = 0; i < s.size(); i++)
+	{
+		if(s[i]==' '){
+			ret+=' ';
+		}else{
+			std::size_t pos = s2.find(s[i]);
+			ret += s1[pos];}
+	}
 
-    return ret;
+	return ret;
 }
 
 
 void processFile(string key) //this functions stores the input from txt file
 {
-  cout<<"\n---------------------------------\n";
-  std:string input=" ";
-  ifstream filein(key.c_str());
-  string word_line;
-  if (filein.is_open())
-  {
+	cout<<"\n---------------------------------\n";
+std:string input=" ";
+    ifstream filein(key.c_str());
+    string word_line;
+    if (filein.is_open())
     {
-      while(getline(filein, word_line))
-      {
-        string str=word_line;
-        std::string retFct = rot47(str);
-        std::cout << retFct << std::endl;
-        std::string retFct2 = rot47(retFct);
-        input=input+"\n"+retFct2;
+	    {
+		    while(getline(filein, word_line))
+		    {
+			    string str=word_line;
+			    string retFct = rot47(str);
+			    cout << retFct << std::endl;
+			    string retFct2 = rot47(retFct);
+			    input=input+"\n"+retFct2;
+		    }
+	    }
+	    filein.close();
+	    cout <<"\n---------------------------------\n";
 
-      }
     }
-    filein.close();
-    std::cout <<"\n---------------------------------\n";
-
-  }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-processFile ( "inp.txt" );
-return 0;
+	if(argc<2)
+	{
+		cout<<"Not Enough Arguments"<<endl;
+		cout<<"USAGE: <INPUT FILE>"<<endl;
+		return -1;
+	}
+	processFile (argv[1]);
+	return 0;
 }
