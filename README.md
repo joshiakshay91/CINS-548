@@ -1,2 +1,2 @@
 # README #
-CINS 548 encrypt and decrypt codes
+CINS 548 encrypt and decrypt codes.
